@@ -11,7 +11,7 @@ class Connector {
 
   Future getData() async {
     http.Response response = await http
-        .get(url); // , headers : {HttpHeaders.authorizationHeader: "TOKEN"},
+        .get(url, headers: {'auth': '2003122b-034a-4098-9a3b-347a2e00039a'});
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -20,9 +20,8 @@ class Connector {
   }
 
   Future getContact({id}) async {
-    http.Response response = await http.get(url +
-        "/" +
-        id); // , headers : {HttpHeaders.authorizationHeader: "TOKEN"},
+    http.Response response = await http.get(url + '/' + id,
+        headers: {'auth': '2003122b-034a-4098-9a3b-347a2e00039a'});
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -39,6 +38,7 @@ class Connector {
     HttpClient httpClient = new HttpClient();
     HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
     request.headers.set('content-type', 'application/json');
+    request.headers.set('auth', '2003122b-034a-4098-9a3b-347a2e00039a');
     request.add(utf8.encode(jsonEncode(body)));
 
     HttpClientResponse response = await request.close();
@@ -63,6 +63,7 @@ class Connector {
     HttpClientRequest request =
         await httpClient.putUrl(Uri.parse(url + "/" + contact.id));
     request.headers.set('content-type', 'application/json');
+    request.headers.set('auth', '2003122b-034a-4098-9a3b-347a2e00039a');
     request.add(utf8.encode(jsonEncode(body)));
 
     HttpClientResponse response = await request.close();
@@ -79,7 +80,8 @@ class Connector {
   }
 
   Future deleteContact({id}) async {
-    http.Response response = await http.delete(url + "/" + id);
+    http.Response response = await http.delete(url + "/" + id,
+        headers: {'auth': '2003122b-034a-4098-9a3b-347a2e00039a'});
     if (response.statusCode < 200 && response.statusCode > 300) {
       return true;
     }
